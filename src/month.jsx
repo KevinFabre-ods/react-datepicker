@@ -134,7 +134,7 @@ export default class Month extends React.Component {
     const { day, selectsStart, selectsEnd, selectsRange, startDate, endDate } =
       this.props;
 
-    const selectingDate = this.props.selectingDate ?? this.props.preSelection;
+    const selectingDate = this.props.selectingDate;
 
     if (!(selectsStart || selectsEnd || selectsRange) || !selectingDate) {
       return false;
@@ -153,6 +153,36 @@ export default class Month extends React.Component {
     }
 
     return false;
+  };
+
+  isSelectingMonthRangeStart = (m) => {
+    if (!this.isInSelectingRangeMonth(m)) {
+      return false;
+    }
+
+    const { day, startDate, selectsStart } = this.props;
+    const _month = utils.setMonth(day, m);
+
+    if (selectsStart) {
+      return utils.isSameMonth(_month, this.props.selectingDate);
+    } else {
+      return utils.isSameMonth(_month, startDate);
+    }
+  };
+
+  isSelectingMonthRangeEnd = (m) => {
+    if (!this.isInSelectingRangeMonth(m)) {
+      return false;
+    }
+
+    const { day, endDate, selectsEnd, selectsRange } = this.props;
+    const _month = utils.setMonth(day, m);
+
+    if (selectsEnd || selectsRange) {
+      return utils.isSameMonth(_month, this.props.selectingDate);
+    } else {
+      return utils.isSameMonth(_month, endDate);
+    }
   };
 
   isInSelectingRangeQuarter = (q) => {
@@ -433,8 +463,10 @@ export default class Month extends React.Component {
         ),
         "react-datepicker__month-text--range-start": this.isRangeStartMonth(m),
         "react-datepicker__month-text--range-end": this.isRangeEndMonth(m),
-        "react-datepicker__month-text--selecting-range-start": false, // TO DO
-        "react-datepicker__month-text--selecting-range-end": false, // TO DO
+        "react-datepicker__month-text--selecting-range-start":
+          this.isSelectingMonthRangeStart(m),
+        "react-datepicker__month-text--selecting-range-end":
+          this.isSelectingMonthRangeEnd(m),
         "react-datepicker__month-text--today": this.isCurrentMonth(day, m),
       }
     );
