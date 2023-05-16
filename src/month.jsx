@@ -410,9 +410,11 @@ export default class Month extends React.Component {
       `react-datepicker__month-${m}`,
       _monthClassName,
       {
+        // Should include excludeDates ?
         "react-datepicker__month-text--disabled":
           (minDate || maxDate || excludeDates || includeDates) &&
           utils.isMonthDisabled(labelDate, this.props),
+        "react-datepicker__month-text--excluded": false, // TODO
         "react-datepicker__month-text--selected": this.isSelectedMonth(
           day,
           m,
@@ -431,6 +433,8 @@ export default class Month extends React.Component {
         ),
         "react-datepicker__month-text--range-start": this.isRangeStartMonth(m),
         "react-datepicker__month-text--range-end": this.isRangeEndMonth(m),
+        "react-datepicker__month-text--selecting-range-start": false, // TO DO
+        "react-datepicker__month-text--selecting-range-end": false, // TO DO
         "react-datepicker__month-text--today": this.isCurrentMonth(day, m),
       }
     );

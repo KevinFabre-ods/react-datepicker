@@ -118,8 +118,15 @@ export default class Year extends React.Component {
       "react-datepicker__year-text--disabled":
         (minDate || maxDate || excludeDates || includeDates || filterDate) &&
         utils.isYearDisabled(y, this.props),
+      "react-datepicker__year--excluded": false, // TODO
       "react-datepicker__year-text--keyboard-selected":
         this.isKeyboardSelected(y),
+      "react-datepicker__year-text--range-start": false, // TODO
+      "react-datepicker__year-text--range-end": false, // TODO
+      "react-datepicker__year-text--in-range": false, // TODO
+      "react-datepicker__year-text--selecting-range-start": false, // TODO
+      "react-datepicker__year-text--selecting-range-end": false, // TODO
+      "react-datepicker__year-text--in-selecting-range": false, // TODO
       "react-datepicker__year-text--today": this.isCurrentYear(y),
     });
   };
@@ -129,6 +136,11 @@ export default class Year extends React.Component {
     const preSelected = utils.getYear(this.props.preSelection);
 
     return y === preSelected ? "0" : "-1";
+  };
+
+  // TODO: add classname react-datepicker__year--selecting-range
+  getClassNames = () => {
+    return classnames("react-datepicker__year");
   };
 
   render() {
@@ -160,7 +172,7 @@ export default class Year extends React.Component {
     }
 
     return (
-      <div className="react-datepicker__year">
+      <div className={this.getClassNames()}>
         <div className="react-datepicker__year-wrapper">{yearsList}</div>
       </div>
     );
